@@ -1,11 +1,13 @@
 services:
   redis:
-    image: redis:7
+    image: redis:7.4-alpine
+    volumes:
+      - redis-data:/data
     networks:
       - jobsletter
 
   db:
-    image: postgres:17
+    image: postgres:17-alpine
     restart: no
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
@@ -85,6 +87,7 @@ services:
 
 volumes:
   jobsletter-db-data:
+  redis-data:
 
 networks:
   jobsletter:
